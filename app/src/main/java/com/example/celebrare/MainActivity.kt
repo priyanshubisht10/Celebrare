@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         binding.imgAddTextBox.setOnClickListener {
             val text = binding.editText.text.toString()
             binding.textViewContainer.visibility = View.VISIBLE
-            binding.drawingView.visibility = View.GONE
+//            binding.drawingView.visibility = View.GONE
 
             binding.drawingView.addTextView(text,binding.textViewContainer)
         }

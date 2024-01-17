@@ -15,9 +15,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 
-
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-
 
     private lateinit var drawPath: FingerPath
     private lateinit var canvasPaint: Paint
@@ -105,13 +103,11 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         textView.text = text
         textView.setTextColor(Color.BLACK)
 
-        // Set initial position to the center of the view
         val centerX = width / 2f
         val centerY = height / 2f
         textView.x = centerX
         textView.y = centerY
 
-        // Set layout parameters
         val layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
