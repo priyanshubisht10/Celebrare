@@ -53,16 +53,35 @@ class MainActivity : AppCompatActivity() {
 
         binding.imgSave.setOnClickListener {
             requestStoragePermission()
+//            binding.drawingView.visibility = View.GONE
+
         }
 
         binding.imgAddTextBox.setOnClickListener {
-            val x = binding.drawingView.width / 2f
-            val y = binding.drawingView.height / 2f
-            binding.drawingView.addTextView(binding.editText.text.toString(), x, y)
+            val text = binding.editText.text.toString()
+            binding.textViewContainer.visibility = View.VISIBLE
+            binding.drawingView.visibility = View.GONE
+
+            binding.drawingView.addTextView(text,binding.textViewContainer)
         }
 
-
     }
+
+//    fun addNewTextView() {
+//
+//        val newTextView = TextView(this)
+//
+//        val layoutParams = FrameLayout.LayoutParams(
+//            ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT
+//        )
+//
+//        newTextView.text = binding.editText.text.toString()
+//
+//        binding.textViewContainer.addView(newTextView, layoutParams)
+//
+//    }
+
 
     private val requestPermission: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->

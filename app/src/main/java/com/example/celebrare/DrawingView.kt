@@ -8,14 +8,16 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 
+
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+
 
     private lateinit var drawPath: FingerPath
     private lateinit var canvasPaint: Paint
@@ -98,38 +100,44 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    fun addTextView(text: String, x: Float, y: Float) {
+    fun addTextView(text: String, linearLayout: LinearLayout) {
         val textView = TextView(context)
         textView.text = text
-        textView.setTextColor(Color.BLACK) // Set the text color to match the drawing color
+        textView.setTextColor(Color.BLACK)
 
-        // Set initial position
-        textView.x = x
-        textView.y = y
-        textView.height = 300
-        textView.width = 300
+        // Set initial position to the center of the view
+        val centerX = width / 2f
+        val centerY = height / 2f
+        textView.x = centerX
+        textView.y = centerY
 
+        // Set layout parameters
+        val layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
-        val parentLinearLayout = parent as LinearLayout
-        parentLinearLayout.addView(textView)
+        linearLayout.addView(textView, layoutParams)
 
-        // Use post method to wait for the layout to be done
-        textView.post {
-            // Log the final coordinates and dimensions
-            Log.d("TextView", "Final X: ${textView.x}, Y: ${textView.y}, Width: ${textView.width}, Height: ${textView.height}")
+        textView.setOnTouchListener { view, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
 
-            // Update the position before making it visible
-            textView.x = x
-            textView.y = y
-            textView.height = 300
-            textView.width = 300
+                    view.setTag(R.id.tag_initial_x, event.rawX - view.x)
+                    view.setTag(R.id.tag_initial_y, event.rawY - view.y)
+                }
 
-            textView.visibility = VISIBLE
-
-            // Show a Toast indicating that the TextView has been added
-            Toast.makeText(context, "Text added to drawing view", Toast.LENGTH_SHORT).show()
+                MotionEvent.ACTION_MOVE -> {
+                    view.x = event.rawX - view.getTag(R.id.tag_initial_x) as Float
+                    view.y = event.rawY - view.getTag(R.id.tag_initial_y) as Float
+                }
+            }
+            true
         }
+
+        Toast.makeText(context, "Text added to drawing view", Toast.LENGTH_SHORT).show()
     }
+
 
     internal inner class FingerPath {
         val color: Int

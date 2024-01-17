@@ -62,6 +62,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/containerLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -69,12 +70,21 @@
 
         <com.example.celebrare.DrawingView
             android:id="@+id/drawingView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#E0E0E0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             tools:ignore="MissingClass" />
 
+        <LinearLayout
+            android:id="@+id/textViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
     </LinearLayout>
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
